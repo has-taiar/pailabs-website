@@ -78,6 +78,16 @@ h6 {
     text-decoration: none;
 }
 
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
+}
+
 .logo-text {
     font-size: 2rem;
     color: var(--primary-red);
@@ -268,8 +278,8 @@ h6 {
 }
 
 .ai-animation {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 450px;
     position: relative;
 }
 
@@ -281,71 +291,223 @@ h6 {
 
 .node {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
     background: var(--primary-red);
     border-radius: 50%;
-    animation: pulse 2s infinite ease-in-out;
+    animation: pulse 3s infinite ease-in-out;
     animation-delay: var(--delay);
+    box-shadow: 0 0 25px rgba(255, 68, 68, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .node:nth-child(1) {
-    top: 20%;
-    left: 20%;
+    top: 15%;
+    left: 15%;
     background: var(--primary-blue);
+    box-shadow: 0 0 25px rgba(68, 68, 255, 0.7);
 }
 
 .node:nth-child(2) {
-    top: 50%;
-    left: 10%;
+    top: 45%;
+    left: 8%;
+    background: var(--primary-red);
 }
 
 .node:nth-child(3) {
-    top: 80%;
-    left: 30%;
+    top: 75%;
+    left: 25%;
     background: var(--primary-blue);
+    box-shadow: 0 0 25px rgba(68, 68, 255, 0.7);
 }
 
 .node:nth-child(4) {
-    top: 30%;
-    right: 20%;
+    top: 20%;
+    right: 15%;
+    background: var(--primary-red);
 }
 
 .node:nth-child(5) {
-    top: 70%;
-    right: 10%;
+    top: 65%;
+    right: 8%;
     background: var(--primary-blue);
+    box-shadow: 0 0 25px rgba(68, 68, 255, 0.7);
+}
+
+.node:nth-child(6) {
+    top: 35%;
+    left: 45%;
+    background: var(--primary-red);
+}
+
+.node:nth-child(7) {
+    top: 55%;
+    right: 35%;
+    background: var(--primary-blue);
+    box-shadow: 0 0 25px rgba(68, 68, 255, 0.7);
+}
+
+.node:nth-child(8) {
+    top: 10%;
+    left: 60%;
+    background: var(--primary-red);
 }
 
 .connection {
     position: absolute;
-    height: 2px;
+    height: 3px;
     background: linear-gradient(90deg, var(--primary-red), var(--primary-blue));
-    opacity: 0.6;
-    animation: glow 3s infinite ease-in-out;
+    opacity: 0.8;
+    animation: glow 4s infinite ease-in-out;
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
 }
 
-.connection:nth-child(6) {
-    top: 25%;
-    left: 25%;
+.connection:nth-child(9) {
+    top: 22%;
+    left: 20%;
+    width: 250px;
+    transform: rotate(15deg);
+}
+
+.connection:nth-child(10) {
+    top: 50%;
+    left: 12%;
     width: 200px;
-    transform: rotate(20deg);
-}
-
-.connection:nth-child(7) {
-    top: 60%;
-    left: 15%;
-    width: 150px;
-    transform: rotate(-30deg);
+    transform: rotate(-25deg);
     animation-delay: 1s;
 }
 
-.connection:nth-child(8) {
-    top: 45%;
-    right: 25%;
-    width: 100px;
-    transform: rotate(60deg);
+.connection:nth-child(11) {
+    top: 35%;
+    right: 20%;
+    width: 180px;
+    transform: rotate(45deg);
     animation-delay: 2s;
+}
+
+.connection:nth-child(12) {
+    top: 70%;
+    left: 30%;
+    width: 220px;
+    transform: rotate(-15deg);
+    animation-delay: 1.5s;
+}
+
+.connection:nth-child(13) {
+    top: 25%;
+    left: 50%;
+    width: 160px;
+    transform: rotate(60deg);
+    animation-delay: 0.5s;
+}
+
+.data-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-white);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFlow 2s linear infinite;
+}
+
+/* Neural Network Animations */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.8;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        opacity: 0.4;
+        box-shadow: 0 0 5px currentColor;
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 25px currentColor;
+    }
+}
+
+@keyframes activeConnection {
+    0% {
+        opacity: 0.7;
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 1;
+        filter: brightness(1.5);
+    }
+    100% {
+        opacity: 0.7;
+        filter: brightness(1);
+    }
+}
+
+@keyframes particleFlow {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes staticFlow {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+    50% {
+        opacity: 0.8;
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+}
+
+@keyframes pulseFlow {
+    0%, 100% {
+        opacity: 0.3;
+        box-shadow: 0 0 5px var(--primary-red);
+    }
+    50% {
+        opacity: 0.8;
+        box-shadow: 0 0 15px var(--primary-red);
+    }
 }
 
 @keyframes pulse {
@@ -654,6 +816,11 @@ textarea.form-control {
     margin-bottom: 1rem;
 }
 
+.footer-logo {
+    height: 35px;
+    width: auto;
+}
+
 .footer-text {
     color: rgba(255, 255, 255, 0.7);
     margin: 0;
@@ -716,8 +883,17 @@ textarea.form-control {
     }
 
     .ai-animation {
-        width: 300px;
-        height: 300px;
+        width: 350px;
+        height: 350px;
+    }
+    
+    .node {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .connection {
+        height: 2px;
     }
 
     .section-title {

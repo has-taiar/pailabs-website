@@ -9,7 +9,232 @@ document.addEventListener('DOMContentLoaded', function () {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
-            navbar.classList.remove('scrolled');
+            navbar.classList.re// Debounce function for performance optimization
+function debounce(func, wait, immediate) {
+    let timeout;
+    return function executedFunction() {
+        const context = this;
+        const args = arguments;
+        const later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+}
+
+// Enhanced Neural Network Animation
+function initializeNeuralNetwork() {
+    console.log('Initializing neural network...');
+    const neuralNetwork = document.getElementById('neuralNetwork');
+    if (!neuralNetwork) {
+        console.log('Neural network element not found');
+        return;
+    }
+    console.log('Neural network element found:', neuralNetwork);
+
+    const nodes = neuralNetwork.querySelectorAll('.node');
+    const connectionsContainer = neuralNetwork.querySelector('.connections-container');
+    const particlesContainer = neuralNetwork.querySelector('.data-particles');
+
+    // Create connections between layers (simplified)
+    function createConnections() {
+        console.log('Creating connections...');
+        const layer1Nodes = neuralNetwork.querySelectorAll('.layer-1 .node');
+        const layer2Nodes = neuralNetwork.querySelectorAll('.layer-2 .node');
+        const layer3Nodes = neuralNetwork.querySelectorAll('.layer-3 .node');
+
+        console.log('Found nodes:', {
+            layer1: layer1Nodes.length,
+            layer2: layer2Nodes.length,
+            layer3: layer3Nodes.length
+        });
+
+        // Clear existing connections
+        connectionsContainer.innerHTML = '';
+
+        // Create a few sample connections instead of all connections
+        if (layer1Nodes.length > 0 && layer2Nodes.length > 0) {
+            createConnection(layer1Nodes[0], layer2Nodes[1]);
+            createConnection(layer1Nodes[1], layer2Nodes[2]);
+            createConnection(layer1Nodes[2], layer2Nodes[0]);
+            createConnection(layer1Nodes[3], layer2Nodes[3]);
+        }
+
+        if (layer2Nodes.length > 0 && layer3Nodes.length > 0) {
+            createConnection(layer2Nodes[1], layer3Nodes[0]);
+            createConnection(layer2Nodes[2], layer3Nodes[1]);
+            createConnection(layer2Nodes[3], layer3Nodes[2]);
+        }
+    }
+
+    function createConnection(startNode, endNode) {
+        if (!startNode || !endNode) return;
+        
+        // Use position relative to parent instead of getBoundingClientRect
+        const connection = document.createElement('div');
+        connection.className = 'connection';
+        
+        // Simple positioning - we'll use CSS to handle the visual connections
+        connection.style.cssText = `
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-red), var(--primary-blue));
+            opacity: 0.7;
+            animation: dataFlow 3s infinite ease-in-out;
+            animation-delay: ${Math.random() * 2}s;
+            left: 20%;
+            top: 50%;
+            width: 60%;
+            transform: translateY(-1px);
+        `;
+
+        connectionsContainer.appendChild(connection);
+    }
+
+    // Add interactive hover effects
+    nodes.forEach((node, index) => {
+        node.addEventListener('mouseenter', function() {
+            // Highlight connected paths
+            const connections = connectionsContainer.querySelectorAll('.connection');
+            connections.forEach(conn => {
+                if (Math.random() > 0.7) { // Randomly highlight some connections
+                    conn.classList.add('active');
+                }
+            });
+
+            // Create particle effect
+            createParticleEffect(this);
+        });
+
+        node.addEventListener('mouseleave', function() {
+            // Remove highlights
+            const connections = connectionsContainer.querySelectorAll('.connection');
+            connections.forEach(conn => {
+                conn.classList.remove('active');
+            });
+        });
+
+        node.addEventListener('click', function() {
+            // Create burst effect
+            createBurstEffect(this);
+        });
+    });
+
+    function createParticleEffect(node) {
+        const nodeRect = node.getBoundingClientRect();
+        const containerRect = neuralNetwork.getBoundingClientRect();
+        const centerX = nodeRect.left - containerRect.left + nodeRect.width / 2;
+        const centerY = nodeRect.top - containerRect.top + nodeRect.height / 2;
+
+        for (let i = 0; i < 5; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const angle = (360 / 5) * i;
+            const distance = 30 + Math.random() * 20;
+            const endX = centerX + Math.cos(angle * Math.PI / 180) * distance;
+            const endY = centerY + Math.sin(angle * Math.PI / 180) * distance;
+
+            particle.style.cssText = `
+                left: ${centerX}px;
+                top: ${centerY}px;
+                animation: particleExpand 0.8s ease-out forwards;
+                animation-delay: ${i * 0.1}s;
+            `;
+
+            particle.style.setProperty('--endX', `${endX}px`);
+            particle.style.setProperty('--endY', `${endY}px`);
+
+            particlesContainer.appendChild(particle);
+
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, 1000);
+        }
+    }
+
+    function createBurstEffect(node) {
+        // Add ripple effect
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 68, 68, 0.6) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: rippleExpand 0.6s ease-out;
+            z-index: 10;
+        `;
+
+        node.appendChild(ripple);
+
+        setTimeout(() => {
+            if (ripple.parentNode) {
+                ripple.parentNode.removeChild(ripple);
+            }
+        }, 600);
+
+        // Trigger network-wide activation
+        nodes.forEach((n, i) => {
+            setTimeout(() => {
+                n.style.animation = 'nodeGlow 0.5s ease-in-out';
+                setTimeout(() => {
+                    n.style.animation = 'nodeGlow 3s infinite ease-in-out';
+                }, 500);
+            }, i * 50);
+        });
+    }
+
+    // Add particle expansion animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes particleExpand {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(var(--endX) - 50%), calc(var(--endY) - 50%)) scale(0);
+            }
+        }
+        
+        @keyframes rippleExpand {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 100px;
+                height: 100px;
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize connections
+    setTimeout(createConnections, 100);
+
+    // Auto-trigger network activity
+    setInterval(() => {
+        const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+        createParticleEffect(randomNode);
+    }, 3000);
+
+    // Recreate connections on window resize
+    window.addEventListener('resize', debounce(createConnections, 250));
+};
         }
     });
 
@@ -90,26 +315,54 @@ document.addEventListener('DOMContentLoaded', function () {
     // Animated counter for stats
     function animateCounters() {
         const counters = document.querySelectorAll('.stat-item h3');
-
+        
         counters.forEach(counter => {
-            const target = parseInt(counter.innerText.replace('+', ''));
+            const originalText = counter.innerText;
+            let target, suffix;
+            
+            // Handle different formats: "20+", "4", "1M+"
+            if (originalText.includes('M+')) {
+                target = parseInt(originalText.replace('M+', ''));
+                suffix = 'M+';
+                target = target * 1000000; // Convert to actual number
+            } else if (originalText.includes('+')) {
+                target = parseInt(originalText.replace('+', ''));
+                suffix = '+';
+            } else {
+                target = parseInt(originalText);
+                suffix = '';
+            }
+            
             const duration = 2000; // 2 seconds
             const step = target / (duration / 16); // 60fps
             let current = 0;
-
+            
             const timer = setInterval(() => {
                 current += step;
                 if (current >= target) {
-                    counter.innerText = target + '+';
+                    // Display final value
+                    if (suffix === 'M+') {
+                        counter.innerText = Math.floor(target / 1000000) + 'M+';
+                    } else {
+                        counter.innerText = target + suffix;
+                    }
                     clearInterval(timer);
                 } else {
-                    counter.innerText = Math.floor(current) + '+';
+                    // Display current value
+                    if (suffix === 'M+') {
+                        const millions = current / 1000000;
+                        if (millions < 1) {
+                            counter.innerText = Math.floor(current / 1000) + 'K+';
+                        } else {
+                            counter.innerText = millions.toFixed(1) + 'M+';
+                        }
+                    } else {
+                        counter.innerText = Math.floor(current) + suffix;
+                    }
                 }
             }, 16);
         });
-    }
-
-    // Trigger counter animation when stats section is visible
+    }    // Trigger counter animation when stats section is visible
     const statsSection = document.querySelector('.stats-grid');
     if (statsSection) {
         const statsObserver = new IntersectionObserver(function (entries) {
@@ -360,6 +613,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Uncomment to enable loading screen
     // addLoadingScreen();
 
+    // Simple neural network animation is handled by CSS
+    
     // Initialize everything
     console.log('Pai Labs website initialized successfully!');
 });
