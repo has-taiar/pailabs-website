@@ -10,76 +10,76 @@ document.addEventListener('DOMContentLoaded', function () {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.re// Debounce function for performance optimization
-function debounce(func, wait, immediate) {
-    let timeout;
-    return function executedFunction() {
-        const context = this;
-        const args = arguments;
-        const later = function() {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-    };
-}
+            function debounce(func, wait, immediate) {
+                let timeout;
+                return function executedFunction() {
+                    const context = this;
+                    const args = arguments;
+                    const later = function () {
+                        timeout = null;
+                        if (!immediate) func.apply(context, args);
+                    };
+                    const callNow = immediate && !timeout;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                    if (callNow) func.apply(context, args);
+                };
+            }
 
-// Enhanced Neural Network Animation
-function initializeNeuralNetwork() {
-    console.log('Initializing neural network...');
-    const neuralNetwork = document.getElementById('neuralNetwork');
-    if (!neuralNetwork) {
-        console.log('Neural network element not found');
-        return;
-    }
-    console.log('Neural network element found:', neuralNetwork);
+            // Enhanced Neural Network Animation
+            function initializeNeuralNetwork() {
+                console.log('Initializing neural network...');
+                const neuralNetwork = document.getElementById('neuralNetwork');
+                if (!neuralNetwork) {
+                    console.log('Neural network element not found');
+                    return;
+                }
+                console.log('Neural network element found:', neuralNetwork);
 
-    const nodes = neuralNetwork.querySelectorAll('.node');
-    const connectionsContainer = neuralNetwork.querySelector('.connections-container');
-    const particlesContainer = neuralNetwork.querySelector('.data-particles');
+                const nodes = neuralNetwork.querySelectorAll('.node');
+                const connectionsContainer = neuralNetwork.querySelector('.connections-container');
+                const particlesContainer = neuralNetwork.querySelector('.data-particles');
 
-    // Create connections between layers (simplified)
-    function createConnections() {
-        console.log('Creating connections...');
-        const layer1Nodes = neuralNetwork.querySelectorAll('.layer-1 .node');
-        const layer2Nodes = neuralNetwork.querySelectorAll('.layer-2 .node');
-        const layer3Nodes = neuralNetwork.querySelectorAll('.layer-3 .node');
+                // Create connections between layers (simplified)
+                function createConnections() {
+                    console.log('Creating connections...');
+                    const layer1Nodes = neuralNetwork.querySelectorAll('.layer-1 .node');
+                    const layer2Nodes = neuralNetwork.querySelectorAll('.layer-2 .node');
+                    const layer3Nodes = neuralNetwork.querySelectorAll('.layer-3 .node');
 
-        console.log('Found nodes:', {
-            layer1: layer1Nodes.length,
-            layer2: layer2Nodes.length,
-            layer3: layer3Nodes.length
-        });
+                    console.log('Found nodes:', {
+                        layer1: layer1Nodes.length,
+                        layer2: layer2Nodes.length,
+                        layer3: layer3Nodes.length
+                    });
 
-        // Clear existing connections
-        connectionsContainer.innerHTML = '';
+                    // Clear existing connections
+                    connectionsContainer.innerHTML = '';
 
-        // Create a few sample connections instead of all connections
-        if (layer1Nodes.length > 0 && layer2Nodes.length > 0) {
-            createConnection(layer1Nodes[0], layer2Nodes[1]);
-            createConnection(layer1Nodes[1], layer2Nodes[2]);
-            createConnection(layer1Nodes[2], layer2Nodes[0]);
-            createConnection(layer1Nodes[3], layer2Nodes[3]);
-        }
+                    // Create a few sample connections instead of all connections
+                    if (layer1Nodes.length > 0 && layer2Nodes.length > 0) {
+                        createConnection(layer1Nodes[0], layer2Nodes[1]);
+                        createConnection(layer1Nodes[1], layer2Nodes[2]);
+                        createConnection(layer1Nodes[2], layer2Nodes[0]);
+                        createConnection(layer1Nodes[3], layer2Nodes[3]);
+                    }
 
-        if (layer2Nodes.length > 0 && layer3Nodes.length > 0) {
-            createConnection(layer2Nodes[1], layer3Nodes[0]);
-            createConnection(layer2Nodes[2], layer3Nodes[1]);
-            createConnection(layer2Nodes[3], layer3Nodes[2]);
-        }
-    }
+                    if (layer2Nodes.length > 0 && layer3Nodes.length > 0) {
+                        createConnection(layer2Nodes[1], layer3Nodes[0]);
+                        createConnection(layer2Nodes[2], layer3Nodes[1]);
+                        createConnection(layer2Nodes[3], layer3Nodes[2]);
+                    }
+                }
 
-    function createConnection(startNode, endNode) {
-        if (!startNode || !endNode) return;
-        
-        // Use position relative to parent instead of getBoundingClientRect
-        const connection = document.createElement('div');
-        connection.className = 'connection';
-        
-        // Simple positioning - we'll use CSS to handle the visual connections
-        connection.style.cssText = `
+                function createConnection(startNode, endNode) {
+                    if (!startNode || !endNode) return;
+
+                    // Use position relative to parent instead of getBoundingClientRect
+                    const connection = document.createElement('div');
+                    connection.className = 'connection';
+
+                    // Simple positioning - we'll use CSS to handle the visual connections
+                    connection.style.cssText = `
             position: absolute;
             height: 2px;
             background: linear-gradient(90deg, var(--primary-red), var(--primary-blue));
@@ -92,77 +92,77 @@ function initializeNeuralNetwork() {
             transform: translateY(-1px);
         `;
 
-        connectionsContainer.appendChild(connection);
-    }
-
-    // Add interactive hover effects
-    nodes.forEach((node, index) => {
-        node.addEventListener('mouseenter', function() {
-            // Highlight connected paths
-            const connections = connectionsContainer.querySelectorAll('.connection');
-            connections.forEach(conn => {
-                if (Math.random() > 0.7) { // Randomly highlight some connections
-                    conn.classList.add('active');
+                    connectionsContainer.appendChild(connection);
                 }
-            });
 
-            // Create particle effect
-            createParticleEffect(this);
-        });
+                // Add interactive hover effects
+                nodes.forEach((node, index) => {
+                    node.addEventListener('mouseenter', function () {
+                        // Highlight connected paths
+                        const connections = connectionsContainer.querySelectorAll('.connection');
+                        connections.forEach(conn => {
+                            if (Math.random() > 0.7) { // Randomly highlight some connections
+                                conn.classList.add('active');
+                            }
+                        });
 
-        node.addEventListener('mouseleave', function() {
-            // Remove highlights
-            const connections = connectionsContainer.querySelectorAll('.connection');
-            connections.forEach(conn => {
-                conn.classList.remove('active');
-            });
-        });
+                        // Create particle effect
+                        createParticleEffect(this);
+                    });
 
-        node.addEventListener('click', function() {
-            // Create burst effect
-            createBurstEffect(this);
-        });
-    });
+                    node.addEventListener('mouseleave', function () {
+                        // Remove highlights
+                        const connections = connectionsContainer.querySelectorAll('.connection');
+                        connections.forEach(conn => {
+                            conn.classList.remove('active');
+                        });
+                    });
 
-    function createParticleEffect(node) {
-        const nodeRect = node.getBoundingClientRect();
-        const containerRect = neuralNetwork.getBoundingClientRect();
-        const centerX = nodeRect.left - containerRect.left + nodeRect.width / 2;
-        const centerY = nodeRect.top - containerRect.top + nodeRect.height / 2;
+                    node.addEventListener('click', function () {
+                        // Create burst effect
+                        createBurstEffect(this);
+                    });
+                });
 
-        for (let i = 0; i < 5; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            const angle = (360 / 5) * i;
-            const distance = 30 + Math.random() * 20;
-            const endX = centerX + Math.cos(angle * Math.PI / 180) * distance;
-            const endY = centerY + Math.sin(angle * Math.PI / 180) * distance;
+                function createParticleEffect(node) {
+                    const nodeRect = node.getBoundingClientRect();
+                    const containerRect = neuralNetwork.getBoundingClientRect();
+                    const centerX = nodeRect.left - containerRect.left + nodeRect.width / 2;
+                    const centerY = nodeRect.top - containerRect.top + nodeRect.height / 2;
 
-            particle.style.cssText = `
+                    for (let i = 0; i < 5; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+
+                        const angle = (360 / 5) * i;
+                        const distance = 30 + Math.random() * 20;
+                        const endX = centerX + Math.cos(angle * Math.PI / 180) * distance;
+                        const endY = centerY + Math.sin(angle * Math.PI / 180) * distance;
+
+                        particle.style.cssText = `
                 left: ${centerX}px;
                 top: ${centerY}px;
                 animation: particleExpand 0.8s ease-out forwards;
                 animation-delay: ${i * 0.1}s;
             `;
 
-            particle.style.setProperty('--endX', `${endX}px`);
-            particle.style.setProperty('--endY', `${endY}px`);
+                        particle.style.setProperty('--endX', `${endX}px`);
+                        particle.style.setProperty('--endY', `${endY}px`);
 
-            particlesContainer.appendChild(particle);
+                        particlesContainer.appendChild(particle);
 
-            setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.parentNode.removeChild(particle);
+                        setTimeout(() => {
+                            if (particle.parentNode) {
+                                particle.parentNode.removeChild(particle);
+                            }
+                        }, 1000);
+                    }
                 }
-            }, 1000);
-        }
-    }
 
-    function createBurstEffect(node) {
-        // Add ripple effect
-        const ripple = document.createElement('div');
-        ripple.style.cssText = `
+                function createBurstEffect(node) {
+                    // Add ripple effect
+                    const ripple = document.createElement('div');
+                    ripple.style.cssText = `
             position: absolute;
             top: 50%;
             left: 50%;
@@ -175,28 +175,28 @@ function initializeNeuralNetwork() {
             z-index: 10;
         `;
 
-        node.appendChild(ripple);
+                    node.appendChild(ripple);
 
-        setTimeout(() => {
-            if (ripple.parentNode) {
-                ripple.parentNode.removeChild(ripple);
-            }
-        }, 600);
+                    setTimeout(() => {
+                        if (ripple.parentNode) {
+                            ripple.parentNode.removeChild(ripple);
+                        }
+                    }, 600);
 
-        // Trigger network-wide activation
-        nodes.forEach((n, i) => {
-            setTimeout(() => {
-                n.style.animation = 'nodeGlow 0.5s ease-in-out';
-                setTimeout(() => {
-                    n.style.animation = 'nodeGlow 3s infinite ease-in-out';
-                }, 500);
-            }, i * 50);
-        });
-    }
+                    // Trigger network-wide activation
+                    nodes.forEach((n, i) => {
+                        setTimeout(() => {
+                            n.style.animation = 'nodeGlow 0.5s ease-in-out';
+                            setTimeout(() => {
+                                n.style.animation = 'nodeGlow 3s infinite ease-in-out';
+                            }, 500);
+                        }, i * 50);
+                    });
+                }
 
-    // Add particle expansion animation
-    const style = document.createElement('style');
-    style.textContent = `
+                // Add particle expansion animation
+                const style = document.createElement('style');
+                style.textContent = `
         @keyframes particleExpand {
             0% {
                 opacity: 1;
@@ -221,20 +221,20 @@ function initializeNeuralNetwork() {
             }
         }
     `;
-    document.head.appendChild(style);
+                document.head.appendChild(style);
 
-    // Initialize connections
-    setTimeout(createConnections, 100);
+                // Initialize connections
+                setTimeout(createConnections, 100);
 
-    // Auto-trigger network activity
-    setInterval(() => {
-        const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
-        createParticleEffect(randomNode);
-    }, 3000);
+                // Auto-trigger network activity
+                setInterval(() => {
+                    const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+                    createParticleEffect(randomNode);
+                }, 3000);
 
-    // Recreate connections on window resize
-    window.addEventListener('resize', debounce(createConnections, 250));
-};
+                // Recreate connections on window resize
+                window.addEventListener('resize', debounce(createConnections, 250));
+            };
         }
     });
 
@@ -315,11 +315,11 @@ function initializeNeuralNetwork() {
     // Animated counter for stats
     function animateCounters() {
         const counters = document.querySelectorAll('.stat-item h3');
-        
+
         counters.forEach(counter => {
             const originalText = counter.innerText;
             let target, suffix;
-            
+
             // Handle different formats: "20+", "4", "1M+"
             if (originalText.includes('M+')) {
                 target = parseInt(originalText.replace('M+', ''));
@@ -332,11 +332,11 @@ function initializeNeuralNetwork() {
                 target = parseInt(originalText);
                 suffix = '';
             }
-            
+
             const duration = 2000; // 2 seconds
             const step = target / (duration / 16); // 60fps
             let current = 0;
-            
+
             const timer = setInterval(() => {
                 current += step;
                 if (current >= target) {
@@ -614,7 +614,7 @@ function initializeNeuralNetwork() {
     // addLoadingScreen();
 
     // Simple neural network animation is handled by CSS
-    
+
     // Initialize everything
     console.log('Pai Labs website initialized successfully!');
 });
