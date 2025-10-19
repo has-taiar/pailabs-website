@@ -278,7 +278,10 @@
             <div class="row g-4 mt-4">
                 <div class="col-lg-8 mx-auto">
                     <div class="contact-form-container">
-                        <form class="contact-form" id="contactForm">
+                        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xkgqepad"
+                            method="POST">
+                            <!-- Hidden field for Formspree reply-to -->
+                            <input type="hidden" name="_subject" value="New contact from Pai Labs website">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -288,7 +291,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" id="email" name="email"
+                                        <input type="email" class="form-control" id="email" name="_replyto"
                                             placeholder="Your Email" required>
                                     </div>
                                 </div>
@@ -306,7 +309,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-light btn-lg">
+                                    <button type="submit" class="btn btn-light btn-lg" id="submitBtn">
                                         Send Message
                                         <i class="fas fa-arrow-right ms-2"></i>
                                     </button>

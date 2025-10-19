@@ -259,26 +259,63 @@ function initializeContactForm() {
     const contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+        contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
 
             // Show loading state
-            submitBtn.classList.add('btn-loading');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             submitBtn.disabled = true;
 
-            // Simulate form submission
-            setTimeout(() => {
-                contactForm.reset();
-                submitBtn.classList.remove('btn-loading');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
+            try {
+                // Get form data
+                const formData = new FormData(contactForm);
 
-                // Show success message
-                showNotification('Thank you! Your message has been sent successfully.', 'success');
-            }, 2000);
+                // Submit to Formspree
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                // Parse response to get error details
+                const data = await response.json();
+                console.log('Formspree response:', response.status, data);
+
+                if (response.ok) {
+                    // Success
+                    contactForm.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    showNotification('Thank you! Your message has been sent successfully. We\'ll get back to you soon!', 'success');
+                } else {
+                    // Error from server - show the actual error message
+                    const errorMessage = data.error || data.errors?.[0]?.message || 'Form submission failed';
+                    console.error('Formspree error:', errorMessage, data);
+                    throw new Error(errorMessage);
+                }
+            } catch (error) {
+                // Network error or other issue
+                console.error('Form submission error:', error);
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+
+                // More helpful error message
+                let errorMsg = 'Oops! There was a problem sending your message. ';
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    errorMsg += 'Please check your internet connection and try again, or email us directly at hello@pailabs.au';
+                } else if (error.message.includes('email')) {
+                    errorMsg += 'Please check that you entered a valid email address, or contact us at hello@pailabs.au';
+                } else {
+                    errorMsg += 'Please try again or email us directly at hello@pailabs.au';
+                }
+
+                showNotification(errorMsg, 'danger');
+            }
         });
     }
 }
