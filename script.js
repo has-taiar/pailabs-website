@@ -166,7 +166,6 @@ function animateCounters() {
     counters.forEach(counter => {
         const target = counter.getAttribute('data-target');
         const duration = 2000;
-        const start = 0;
         const startTime = performance.now();
 
         function updateCounter(currentTime) {
@@ -175,13 +174,16 @@ function animateCounters() {
 
             let current;
             if (target.includes('M+')) {
-                // Handle millions
-                const numValue = parseFloat(target);
-                current = Math.floor(progress * numValue);
-                counter.textContent = current.toFixed(1) + 'M+';
+                // Handle millions - count up to 1,000,000
+                const numValue = parseFloat(target.replace('M+', ''));
+                const totalValue = numValue * 1000000;
+                current = Math.floor(progress * totalValue);
+                
+                // Display as full number with comma separators
+                counter.textContent = current.toLocaleString() + '+';
             } else if (target.includes('+')) {
                 // Handle regular numbers with +
-                const numValue = parseInt(target);
+                const numValue = parseInt(target.replace('+', ''));
                 current = Math.floor(progress * numValue);
                 counter.textContent = current + '+';
             } else {
@@ -194,7 +196,14 @@ function animateCounters() {
             if (progress < 1) {
                 requestAnimationFrame(updateCounter);
             } else {
-                counter.textContent = target;
+                // Set final display value
+                if (target.includes('M+')) {
+                    const numValue = parseFloat(target.replace('M+', ''));
+                    const totalValue = numValue * 1000000;
+                    counter.textContent = totalValue.toLocaleString() + '+';
+                } else {
+                    counter.textContent = target;
+                }
             }
         }
 
@@ -343,8 +352,8 @@ document.addEventListener('DOMContentLoaded', function () {
     neuralNet.initialize();
 
     // Initialize stats counter when scrolled into view
-    const statsSection = document.querySelector('.stats-section');
-    if (statsSection) {
+    const statsGrid = document.querySelector('.stats-grid');
+    if (statsGrid) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -352,9 +361,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     observer.unobserve(entry.target);
                 }
             });
-        });
+        }, { threshold: 0.5 });
 
-        observer.observe(statsSection);
+        observer.observe(statsGrid);
     }
 
     console.log('Website initialization complete');

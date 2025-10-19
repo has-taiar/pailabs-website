@@ -61,7 +61,7 @@ h6 {
 }
 
 .navbar-logo {
-    height: 40px;
+    height: 50px;
     width: auto;
 }
 
@@ -590,6 +590,28 @@ section {
 textarea.form-control {
     min-height: 150px;
     resize: vertical;
+}
+
+.contact-info {
+    padding: 2rem;
+}
+
+.contact-icon {
+    font-size: 3rem;
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+}
+
+.contact-link {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.contact-link:hover {
+    color: var(--primary-red);
+    border-bottom-color: var(--primary-red);
 }
 
 /* Footer */
