@@ -178,7 +178,7 @@ function animateCounters() {
                 const numValue = parseFloat(target.replace('M+', ''));
                 const totalValue = numValue * 1000000;
                 current = Math.floor(progress * totalValue);
-                
+
                 // Display as full number with comma separators
                 counter.textContent = current.toLocaleString() + '+';
             } else if (target.includes('+')) {
